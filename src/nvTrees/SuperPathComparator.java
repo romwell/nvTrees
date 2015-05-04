@@ -9,7 +9,7 @@ import java.util.Comparator;
  * @author Romwell
  *
  */
-public class SuperPathComparator implements Comparator {
+public class SuperPathComparator implements Comparator<SuperPath> {
 
 	/**
 	 * The SuperPaths are compared by treating each colorpath as a "digit"
@@ -39,10 +39,8 @@ public class SuperPathComparator implements Comparator {
 	 * @return a string representation of the superpath, with the "least significant"
 	 * colorpath being the one specified by sigColor.
 	 */			
-	public int compare(Object arg0, Object arg1) 
+	public int compare(SuperPath P1, SuperPath P2) 
 	{
-		SuperPath P1 = (SuperPath)arg0;
-		SuperPath P2 = (SuperPath)arg1;
 		for (int i=1;i<NvTree.MAXCOL;i++)  
 		{		
 			if (i!=sigColor)

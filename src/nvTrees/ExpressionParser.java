@@ -135,7 +135,7 @@ public class ExpressionParser {
 		}
 		catch(NullPointerException e)
 		{
-			throw new TreeNodeException("Uknown error occurred when parsing: \n"+e.getMessage());
+			throw new TreeNodeException("Null pointer error occurred when parsing this:\n"+expression+"\n");
 		}
 		finally
 		{

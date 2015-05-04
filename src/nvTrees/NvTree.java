@@ -537,7 +537,6 @@ public class NvTree {
 	 * @return a tree that represents this pattern with all leaf-root paths being
 	 * alphabetically smallest ones.
 	 */
-	@SuppressWarnings("unchecked")
 	public static NvTree fromPattern(Collection<SuperPath> pattern) throws TreeNodeException	
 	{
 		 ArrayList<SuperPath> blocks= new ArrayList<SuperPath>(pattern);

@@ -133,6 +133,24 @@ public class SuperPath  {
 		return ans;
 	}
 	
+	/**
+	 * Tells whether the block of the pattern represented by P1
+	 * intersects the block represented by a path P2.
+	 *  
+	 * @param P
+	 * @return
+	 */
+	static boolean areIntersecting(SuperPath P1, SuperPath P2){
+		for (int i=1; i<NvTree.MAXCOL; i++){
+			String S1 = P1.colorpaths[i]; 
+			String S2 = P2.colorpaths[i];
+			if (!(S1.startsWith(S2) || S2.startsWith(S1)))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	
 	/**

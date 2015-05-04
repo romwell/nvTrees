@@ -248,7 +248,6 @@ public class TreePermutation {
 		this.permutationMap = newMap;
 	}
 
-	
 	/**
 	 * Tells whether the permutation map contains a key
 	 * <br>(the keys in the map are paths to the nodes on the left tree)
@@ -259,7 +258,6 @@ public class TreePermutation {
 	{
 		return permutationMap.containsKey(key);
 	}
-	
 	
 	/**
 	 * Tells whether the permutation map contains a value
@@ -349,13 +347,13 @@ public class TreePermutation {
 	 * @param B a permutation s.t. B.left_tree ~ A.right_tree (correspond to same pattern)
 	 * @return A*B (right action)
 	 * <br>
-	 * Ex: if A has 1 -> 2, and B has, then the result will have 2 -> 3
+	 * Ex: if A has 1 -> 2, and B has 2->3, then the result will have 1 -> 3
 	 */
 	public static TreePermutation multiply(TreePermutation A, TreePermutation B) throws TreeNodeException
 	{
 		if (A==B)
 		{
-			throw new TreeNodeException("You are trying to combine a TreePermutayion instance with itself. You must reate a separate copy to do this.");
+			throw new TreeNodeException("You are trying to combine a TreePermutation instance with itself. You must create a separate copy to do this.");
 		}
 		NvTree left = A.left_tree.duplicate();
 		NvTree right = B.right_tree.duplicate();
