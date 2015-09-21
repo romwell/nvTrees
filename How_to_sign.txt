@@ -1,0 +1,4 @@
+1. keytool -selfcert -alias myalias -genkey -keystore mystore -keyalg RSA -validity 99999
+2. jarsigner -keystore mystore SignedApplet.jar myalias
+
+NOTE: must have JDK installed to run jarsigner (keytool is in JRE).
