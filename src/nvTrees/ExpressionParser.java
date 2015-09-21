@@ -1,6 +1,7 @@
 package nvTrees;
 import java.util.ArrayList;
 import java.util.HashSet;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -85,6 +86,10 @@ public class ExpressionParser {
 		binary_opeators.add("^"); //conjugation and power
 		binary_opeators.add("*"); //multiplication
 		binary_opeators.add("#"); //commutator: A#B = AB!A!B
+		//TODO: maybe delete this in future releases
+		//used for demonstration purposes
+		binary_opeators.add("<"); //A<B: refine right tree of A to the left tree of B
+		binary_opeators.add(">"); //A>B: refine the left tree of B to right tree of A 
 		/*
 		 * These (redundant) operators are added to test multicharacter operators
 		 */
@@ -293,9 +298,9 @@ public class ExpressionParser {
 
 	
 	/**
-	 * Applies an binary operator to two treepairs 
-	 * @param L the left argument of the operator (must be a treepair)
-	 * @param R the right argument of the operator (must be a treepair)
+	 * Applies an binary operator to two treepairs or a treepair and a number (e.g. A^3) 
+	 * @param L the left argument of the operator 
+	 * @param R the right argument of the operator
 	 * @param operator the operator to be applied
 	 * @return the result of the operation
 	 */
@@ -340,6 +345,25 @@ public class ExpressionParser {
 					}											
 				}
 				throwOpException(operator, L, R);
+			}
+			else if ((operator=="<")||(operator==">")) //refine left pair
+			{				
+				if ((L instanceof TreePair)&&(L instanceof TreePair))
+				{
+					TreePair A = (TreePair)L;
+					TreePair B = (TreePair)R;					
+					if (operator==">")
+					{
+						ans = TreePair.refineLeftTreeTo(B, A.right_tree);
+					}
+					else
+					{
+						ans = TreePair.inverseOf(TreePair.refineLeftTreeTo(TreePair.inverseOf(A), B.left_tree));
+					}
+					return ans;
+				}
+				else {throwOpException(operator, L, R);}
+								
 			}
 			else throw new TreeNodeException(operator+" is not a valid unary operator!");
 			return ans;

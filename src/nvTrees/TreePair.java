@@ -488,6 +488,8 @@ public class TreePair {
 	 * Returns a new TreePair that is the reduced canonical representative
 	 * of the map represented by this pair of trees.
 	 * <br>
+	 * If you don't need a canonical representative, use a much faster removeExposedCarets.
+	 * <br>
 	 * In a canonical representative, the leaf-root paths are of smallest
 	 * length and are lexicographically smallest (among representative).
 	 * @return a new canonical treepair
