@@ -2,9 +2,11 @@ package nvTrees;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 
 /**
@@ -61,7 +63,9 @@ public class DisplayPanel extends JPanel implements ListCellRenderer {
 		}
 		else 
 		{	
-			JLabel val = new JLabel(value.toString()); 
+			JTextField val = new JTextField(value.toString());
+			//TODO: figure out how to make selectable
+			val.setBorder(null);
 			val.setFont(list.getFont());
 			return val;
 		}		

@@ -4,25 +4,25 @@ import java.util.Collection;
 import java.util.HashMap;
 /**
  * This class holds a map between variable names and corresponding 
- * TreePairs, and operations on them (storage, etc.)
+ * values, and operations on them (storage, etc.)
  * @author Romwell
  *
  */
-public class TreeBucket 
+public class VarBucket 
 {
 
 	/**
 	 * The map between string variable names and values
 	 */
-	private HashMap<String, TreePair> bucket;
+	private HashMap<String, Object> bucket;
 	
 	/**
 	 * Constructs a new Bucket to store variables
 	 *
 	 */
-	public TreeBucket()
+	public VarBucket()
 	{
-		bucket = new HashMap<String, TreePair>();
+		bucket = new HashMap<String, Object>();
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class TreeBucket
 	 * @param name variable name
 	 * @param value variable value
 	 */
-	public void add(String name, TreePair value) throws TreeNodeException
+	public void add(String name, Object value) throws TreeNodeException
 	{
 		if (isGoodVarName(name)){ bucket.put(name, value);}
 		else {throw new TreeNodeException("Invalid variable name : "+name);}
@@ -49,7 +49,7 @@ public class TreeBucket
 	 * @param name name a variable to retrieve
 	 * @return a TreePair stored in this variable
 	 */
-	public TreePair get(String name) throws TreeNodeException
+	public Object get(String name) throws TreeNodeException
 	{
 		if (bucket.containsKey(name))
 		{
@@ -60,6 +60,26 @@ public class TreeBucket
 			throw new TreeNodeException("Variable "+name+" is undefined");
 		}
 	}
+	
+
+	/**
+	 * Clears a variable if it exists
+	 * @param name name a variable to clear
+	 * @return true if the variable existed before this method was called
+	 */
+	public boolean remove(String name) throws TreeNodeException
+	{
+		if (bucket.containsKey(name))
+		{
+			bucket.remove(name);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	
 	/**
 	 * Tells whether a given string is a valid variable name. Normally,

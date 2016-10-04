@@ -137,7 +137,7 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
 	/**
 	 * A bucket that stores variable name-value assignments
 	 */
-	TreeBucket bucket;
+	VarBucket bucket;
 	
 	
 	/**
@@ -265,7 +265,9 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
 		//add GUI elements to their places on the applet form
 		setLayout(new BorderLayout());  //this allows placing GUI elements on the borders/center		
         //add(dispPanel, "Center");		
-		add(new JScrollPane(display), "Center");		
+		JScrollPane mainPane = new JScrollPane(display);
+		//TODO: figure out how to make text selectable
+		add(mainPane, "Center");		
         add(bottomPanel, "South");        
         add(rightPanel, "East");
         add(leftPanel, "West");
@@ -299,7 +301,7 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
     */
    public void init() 
    {
-	  bucket = new TreeBucket();
+	  bucket = new VarBucket();
 	  
       setBackground(Color.WHITE); 
       initProgramOptions();
@@ -326,7 +328,8 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
 		   executeCommand("B={1011000,1010100,1 2 3 4}");
 		   executeCommand("Ainv=A^-1");
 		   executeCommand("Binv=B^-1");
-		   executeCommand("\\growth A B Ainv Binv, 3");
+		   executeCommand("growth [A,B,4]");
+		   executeCommand("semi [A,B,Ainv,Binv,3]");
 	   }
    }
 
@@ -634,8 +637,15 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
 	   ArrayList<TreePair> S = new ArrayList<TreePair>();
 	   while (ST.hasMoreTokens()){
 		   String v = ST.nextToken();
-		   TreePair T = bucket.get(v);
-		   S.add(T);
+		   Object V = bucket.get(v);
+		   if (V instanceof TreePair)
+		   {
+			   S.add((TreePair) V);
+		   }
+		   else
+		   {
+			   throw new TreeNodeException("Variable " + v + " is not a tree pair.");
+		   }
 	   }
 	   return TreePair.growth(S, n);
    }

@@ -368,15 +368,15 @@ public class TreePermutation {
 		return result;
 	}
 	
-	public String toString() 
+	public String toString()
 	{
 		try
 		{
 			return NvTree.arrayToString(this.toArray());
 		}
 		catch (TreeNodeException e)
-		{
-			return "";
+		{			
+			return "<broken permatuation>" + e.getError();
 		}
 	}
 	
