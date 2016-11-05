@@ -2,3 +2,5 @@
 2. jarsigner -keystore mystore SignedApplet.jar myalias
 
 NOTE: must have JDK installed to run jarsigner (keytool is in JRE).
+
+(my def. psw = a9a)
