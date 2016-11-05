@@ -306,7 +306,7 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
       setBackground(Color.WHITE); 
       initProgramOptions();
       placeGUIElements();      
-      doStuff();
+      startSession();
       updateDisplay();
    }
 
@@ -315,21 +315,25 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
     * Loads last session or performs a sample computation
     *
     */
-   public void doStuff()
+   public void startSession()
    {
+	   /*TODO: can't load files in an applet anymore. This needs to be fixed in an export to a desktop app. 
+	   
 	   File F = new File(defaultFname+".nvt");
 	   if (F.exists())
 	   {
 		  executeCommand("\\load "+defaultFname);   
 	   }
 	   else 
+	   //*/	   
+		   
 	   {
 		   executeCommand("A={11000,10100,1 2 3}");
 		   executeCommand("B={1011000,1010100,1 2 3 4}");
 		   executeCommand("Ainv=A^-1");
 		   executeCommand("Binv=B^-1");
 		   executeCommand("growth [A,B,4]");
-		   executeCommand("semi [A,B,Ainv,Binv,3]");
+		   executeCommand("semi [A,B,4]");
 	   }
    }
 
