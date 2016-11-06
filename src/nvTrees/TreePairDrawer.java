@@ -227,7 +227,6 @@ public class TreePairDrawer implements Drawable{
 		int RX0 = LX0 + diameter + width;
 		int LY0 = Y0 + Math.max(leftDrawer.getHeight(), rightDrawer.getHeight());
 		int RY0 = LY0;
-		this.drawPatternsAt(G, LX0, LY0, RX0, RY0, width);
 		boolean drawRectDiagram = false;
 		try
 		{
@@ -235,9 +234,14 @@ public class TreePairDrawer implements Drawable{
 			drawRectDiagram = (!TreePair.isMultiDimensional(pair)) && pair.getPermutation().preservesOrder();;
 		}
 		catch (TreeNodeException E) {/*TODO: what really should be done then? */}
+		
 		if (drawRectDiagram)
 		{			
-			drawRectDiagramAt(G, (int) (RX0+width*1.2), RY0, width, (int) width/4);
+			drawRectDiagramAt(G, X0, RY0, width * 2, (int) width/4);
+		}
+		else
+		{
+			this.drawPatternsAt(G, LX0, LY0, RX0, RY0, width);
 		}
 	}
 	
