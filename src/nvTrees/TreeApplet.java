@@ -574,12 +574,11 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
 	 else if (S.equals("help"))
 	 {
 		 
-		 Scanner sc = loadJARText("/nvTrees/quickhelp.txt");
-		 String H="<html><pre>";
+		 Scanner sc = loadJARText("/nvTrees/help.html");
+		 String H = "";
 		 if (sc!=null)
 		 {
 			 while (sc.hasNextLine()) {H+=sc.nextLine()+"\n";}
-			 H+="</pre></html>";
 			 dispData.add(H);
 		 }
 		 else

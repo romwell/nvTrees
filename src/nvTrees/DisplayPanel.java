@@ -3,6 +3,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -63,7 +64,8 @@ public class DisplayPanel extends JPanel implements ListCellRenderer {
 		}
 		else 
 		{	
-			JTextField val = new JTextField(value.toString());
+			JEditorPane val = new JEditorPane("text/html", value.toString());
+			//JTextField val = new JTextField(value.toString());
 			//TODO: figure out how to make selectable
 			val.setBorder(null);
 			val.setFont(list.getFont());
