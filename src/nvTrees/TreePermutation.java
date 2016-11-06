@@ -39,7 +39,9 @@ public class TreePermutation {
 	
 	/**
 	 * Returns the permutation of tree leaves stored in permutationMap as an array
-	 * @return array containg the permutation of leaves
+	 * <br>(For a tree pair with n leaves, when leaves are traverserd left-to-right and labeled 1..n, the
+	 * map is given as a pertmutation of 1..n).
+	 * @return array containg the permutation of 1..n 
 	 */
 	public int[] toArray() throws TreeNodeException
 	{
@@ -380,5 +382,18 @@ public class TreePermutation {
 		}
 	}
 	
-	
+	/**
+	 * Returns true if the leaves are mapped left-to-right (i.e. as a permutation, this is trivial, and 
+	 * the map is in Thompson group F). 
+	 * @return true if the permutation is trivial
+	 */
+	public boolean preservesOrder() throws TreeNodeException
+	{
+		int[] a = this.toArray();
+		for (int i=0; i<a.length; i++)
+		{
+			if (a[i] != i+1) return false;
+		}
+		return true;
+	}
 }

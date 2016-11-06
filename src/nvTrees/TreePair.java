@@ -519,13 +519,11 @@ public class TreePair {
 	}
 	
 	/**
-	 * Returns true if the tree needs to be expanded before reduction. 
-	 * TODO: check if this is false when all the colors on the node match.
-	 * Currently, returns false if there's only only one color in the tree.
+	 * Returns true if T represents an element of F, T or V (dimension 1)
 	 * @param T
 	 * @return
 	 */
-	static boolean needsExpanding(TreePair T)
+	static boolean isMultiDimensional(TreePair T)
 	{
 		int col = T.left_tree.rootNode.color;
 		return !subTreeMatchesColor(T.left_tree.rootNode, col) || !subTreeMatchesColor(T.right_tree.rootNode, col);
@@ -546,8 +544,8 @@ public class TreePair {
 	 */
 	public TreePair reduce(boolean mergeBlocks) throws TreeNodeException 
 	{
-		//TODO: check that this does not mess up the uniqeness. 
-		if (needsExpanding(this))
+		//TODO: check that this does not mess up the uniqueness. 
+		if (isMultiDimensional(this))
 		{
 			extendToLeftFlat();
 		}

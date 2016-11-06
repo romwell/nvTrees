@@ -333,7 +333,7 @@ public class TreeApplet extends JApplet implements  ChangeListener, KeyListener,
 		   executeCommand("Ainv=A^-1");
 		   executeCommand("Binv=B^-1");
 		   executeCommand("growth [A,B,4]");
-		   executeCommand("semi [A,B,4]");
+		   //executeCommand("semi [A,B,4]");
 	   }
    }
 

@@ -195,6 +195,25 @@ public class TreePairDrawer implements Drawable{
 		drawPatternAt(G, right, rightLabels, RX0, RY0, width);
 	}
 	
+	public void drawRectDiagramAt(Graphics G, int X0, int Y0, int width, int height) 
+	{
+		int col = pair.left_tree.rootNode.color;
+		TreePermutation perm = this.pair.getPermutation();		
+		ArrayList<SuperPath> left = pair.left_tree.detailedDFS();
+		
+		for (SuperPath L:left)
+		{
+			SuperPath R = perm.get(L);
+			int XL = (int)(X0 + width * L.getOffset(col));
+			int XR = (int)(X0 + width * R.getOffset(col));
+			int WL = (int) (width * L.getWidth(col));
+			int WR = (int) (width * R.getWidth(col));
+			int [] x = {XL, XL+WL, XR+WR, XR};
+			int [] y = {Y0, Y0, Y0+height, Y0+height};
+			G.drawPolygon(x, y, 4);
+		}
+	}
+	
 	
 	/**
 	 * Draws the TreePair as a 2D pattern pair (i.e., ignoring all color dimensions except 1 and 2)
@@ -209,6 +228,17 @@ public class TreePairDrawer implements Drawable{
 		int LY0 = Y0 + Math.max(leftDrawer.getHeight(), rightDrawer.getHeight());
 		int RY0 = LY0;
 		this.drawPatternsAt(G, LX0, LY0, RX0, RY0, width);
+		boolean drawRectDiagram = false;
+		try
+		{
+			
+			drawRectDiagram = (!TreePair.isMultiDimensional(pair)) && pair.getPermutation().preservesOrder();;
+		}
+		catch (TreeNodeException E) {/*TODO: what really should be done then? */}
+		if (drawRectDiagram)
+		{			
+			drawRectDiagramAt(G, (int) (RX0+width*1.2), RY0, width, (int) width/4);
+		}
 	}
 	
 	public int getWidth()
