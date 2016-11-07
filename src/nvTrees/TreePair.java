@@ -872,7 +872,7 @@ public class TreePair {
 			newWords.clear();
 			for (TreePair w : lastAddedWords){
 				for (TreePair g : S){
-					newWords.add(multiply(w, g));
+					newWords.add(compose(w, g));
 				}
 			}
 			lastAddedWords.clear();
@@ -880,7 +880,7 @@ public class TreePair {
 				boolean isNew = true;
 				TreePair wInv = inverseOf(w);							
 				for (TreePair wOld: currentWords){
-					TreePair t = multiply(wOld, wInv);
+					TreePair t = compose(wOld, wInv);
 					if (t.numBlocks() == 1) // <=> identity
 					{
 						isNew = false;
@@ -932,7 +932,7 @@ public class TreePair {
 			{
 				for (TreePair g : S)
 				{
-					TreePair wNew = multiply(w, g);
+					TreePair wNew = compose(w, g);
 					wNew = wNew.reduce();
 					newWords.put(wNew.toString(), wNew);
 				}
@@ -1035,15 +1035,17 @@ public class TreePair {
 
 
 	/**
-	 * Returns the product of A and B (in the function composition sense).
+	 * TODO: this returns B o A, but since the GUI now uses left action by default, this is asking for trouble.
+	 * Should refactor to A o B, but that requires carefully looking at all the code that calls this.
+	 * Returns the product of B and B (in the function composition sense).
 	 * The result has reduced form (now exposed carets, i.e. adjacent pattern blocks going to adjacent pattern blocks)
 	 * @param A a tree pair
 	 * @param B another tree pair to multiply by
-	 * @return reduced tree pair representing A*B [right action]
+	 * @return reduced tree pair C such that, as a function, C(x) = B(A(x)) (i.e. with right action, C=BA).
 	 * <br>
 	 * NOTE: the result is assumed to be reduced by other methods (order, growth, etc.) 
 	 */
-	public static TreePair multiply(TreePair A, TreePair B) throws TreeNodeException
+	public static TreePair compose(TreePair A, TreePair B) throws TreeNodeException
 	{
 		A = inverseOf(A);
 		TreePair newA = refineLeftTreeTo(A, B.left_tree);
@@ -1083,7 +1085,7 @@ public class TreePair {
 		TreePair ans = new TreePair("0,0,1");
 		for (int i=0;i<n;i++)
 		{
-			ans = multiply(ans, a);
+			ans = compose(ans, a);
 		}
 		return ans;
 	}
@@ -1104,7 +1106,7 @@ public class TreePair {
 			TreePair ans = new TreePair("0,0,1");		
 			for (int i=0;i<maxorder;i++)
 			{				
-				ans = multiply(ans, A);
+				ans = compose(ans, A);
 				if (ans.numBlocks()==1)
 				{
 					return (i+1);
@@ -1138,18 +1140,16 @@ public class TreePair {
 	
 	
 	/**
-	 * Returns A conjugated by B [right action]
+	 * Returns A conjugated by B
 	 * @param A
 	 * @param B
-	 * @return B^-1 * A * B 
+	 * @return B * A * B^-1 (left action) 
 	 */
 	public static TreePair conjugate(TreePair A, TreePair B) throws TreeNodeException
 	{
 		   if ((A!=null)&&(B!=null))
 		   {
-			   TreePair B1 = B.duplicate();
-			   B1.invert();
-			   return TreePair.multiply(B1, TreePair.multiply(A, B));
+			   return TreePair.compose(TreePair.inverseOf(B), TreePair.compose(A, B));
 		   }
 		   else
 		   {
@@ -1158,17 +1158,16 @@ public class TreePair {
 	}
 	
 	/**
-	 * Returns the commutator of A and B [right action]
+	 * Returns the commutator of A and B
 	 * @param A a tree pair
 	 * @param B another tree pair 
-	 * @return B^-1 * A^-1 * B * A = B^-1 * B^A [right action] 
+	 * @return A*B*A^-1*B^-1 =  (B^A)*B^-1 [left action] 
 	 */
 	public static TreePair commutator(TreePair A, TreePair B) throws TreeNodeException
 	{
 		   if ((A!=null)&&(B!=null))
 		   {
-			   TreePair B1 = inverseOf(B);
-			   return TreePair.multiply(B1, TreePair.conjugate(B, A));
+			   return TreePair.compose(TreePair.inverseOf(B), TreePair.conjugate(B, A));
 		   }
 		   else
 		   {
