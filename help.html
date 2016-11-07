@@ -10,7 +10,26 @@ the boxes on the right contain command history and list of variables. Clicking o
 history box brings it up in the command line.
 
 <pre>
-You may input a run either an application command or an expression command.
+Usage examples (note: type the expressions exactly - extra spaces may be a problem):
+Define the generators of the Thompson group F:
+	X0={11000,10100,1 2 3}
+	X1={1011000,1010100,1 2 3 4}
+Right-action multiplication (X0 acts first)
+	X0*X1	
+Power
+	X0^(-3)	
+Conjugation
+	X1^X0
+	X1^(X0^2)
+Commutator
+	X1#X0
+Growth
+	growth [A,B,3]			
+Cyclic permutation as an element of V
+	X={1100100,1100100,2 3 4 1}
+Baker's map as an element of 2V
+	X={100,200,1 2}
+
 
 
 Application commands:		

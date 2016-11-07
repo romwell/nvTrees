@@ -35,6 +35,7 @@ public class TreePairDrawer implements Drawable{
 	 */
 	public TreeDrawer rightDrawer;
 	
+	
 	/**
 	 * X-offset
 	 */
@@ -54,6 +55,12 @@ public class TreePairDrawer implements Drawable{
 	 * Enablling or disabling pattern drawing
 	 */
 	public boolean drawPatterns=true;
+	
+	/**
+	 * Draw rectangular diagram istead of pattern pair. 
+	 * May be set to true ONLY  if the element is in F! 
+	 */
+	boolean rectDiagramMode = false;
 	
 	/**
 	 * Creates an instance of the tree pair drawer, a class to draw tree pairs.
@@ -84,6 +91,7 @@ public class TreePairDrawer implements Drawable{
 		{
 			JOptionPane.showMessageDialog(null, "Permutation contains an error;  probably not bijective. Message: \n"+e.errorString);
 		}
+		rectDiagramMode = rectDiagramMode();
 	}
 
 	/**
@@ -227,17 +235,9 @@ public class TreePairDrawer implements Drawable{
 		int RX0 = LX0 + diameter + width;
 		int LY0 = Y0 + Math.max(leftDrawer.getHeight(), rightDrawer.getHeight());
 		int RY0 = LY0;
-		boolean drawRectDiagram = false;
-		try
-		{
-			
-			drawRectDiagram = (!TreePair.isMultiDimensional(pair)) && pair.getPermutation().preservesOrder();;
-		}
-		catch (TreeNodeException E) {/*TODO: what really should be done then? */}
-		
-		if (drawRectDiagram)
+		if (rectDiagramMode)
 		{			
-			drawRectDiagramAt(G, X0, RY0, width * 2, (int) width/4);
+			drawRectDiagramAt(G, X0, RY0, rectDiagramWidth(), rectDiagramHeight());
 		}
 		else
 		{
@@ -252,7 +252,31 @@ public class TreePairDrawer implements Drawable{
 	
 	public int getHeight()
 	{
-		return Math.max(leftDrawer.getHeight(), rightDrawer.getHeight()) + diameter*3 + patternWidth();
+		int pattern_height = (rectDiagramMode) ? rectDiagramHeight() : patternWidth();
+		return Math.max(leftDrawer.getHeight(), rightDrawer.getHeight()) + diameter*3 + pattern_height;
+	}
+	
+	static int rectDiagramWidth()
+	{
+		return patternWidth() * 2;
+	}
+	
+	static int rectDiagramHeight()
+	{
+		return patternWidth()/4;
+	}
+	
+
+	boolean rectDiagramMode()
+	{
+		try 
+		{
+			return (!TreePair.isMultiDimensional(pair)) && pair.getPermutation().preservesOrder();
+		}
+		catch (TreeNodeException E)
+		{
+			return false;
+		}
 	}
 	
 	/**
