@@ -489,7 +489,7 @@ public class NvTree {
 		return nodeByPath(path).getSuperpath();
 	}
 		
-	
+	//TODO: this is inefficient. Rewrite code to copy, not to construct/deconstruct a string!
 	/**
 	 * Provides a duplicate of this tree
 	 * @return a deep copy of this NvTree

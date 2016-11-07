@@ -955,6 +955,8 @@ public class TreePair {
 		}
 	}
 	
+	
+	
 	/**
 	 * Returns a TreePair representing the same map as A, but with its left pattern being a common
 	 * refinement of A's left pattern and pattern represented by T 
@@ -1033,17 +1035,16 @@ public class TreePair {
 	}	
 	*/
 
-
+	 // TODO: this returns B o A, but since the GUI now uses left action by default, this is asking for trouble.
+	 // TODO: refactor to A o B, but that requires carefully looking at all the code that calls this.
 	/**
-	 * TODO: this returns B o A, but since the GUI now uses left action by default, this is asking for trouble.
-	 * Should refactor to A o B, but that requires carefully looking at all the code that calls this.
-	 * Returns the product of B and B (in the function composition sense).
+	 * <p>Returns the product of B and A (in the function composition sense: B o A).
 	 * The result has reduced form (now exposed carets, i.e. adjacent pattern blocks going to adjacent pattern blocks)
 	 * @param A a tree pair
 	 * @param B another tree pair to multiply by
 	 * @return reduced tree pair C such that, as a function, C(x) = B(A(x)) (i.e. with right action, C=BA).
 	 * <br>
-	 * NOTE: the result is assumed to be reduced by other methods (order, growth, etc.) 
+	 * NOTE: the result is not reduced. Reduce the output in other methods that call this (order, growth, etc.) 
 	 */
 	public static TreePair compose(TreePair A, TreePair B) throws TreeNodeException
 	{
